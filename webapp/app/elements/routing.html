@@ -7,7 +7,6 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
 Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 -->
-
 <script src="../bower_components/page/page.js"></script>
 <script>
     window.addEventListener('WebComponentsReady', function () {
@@ -54,19 +53,35 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             app.route = 'inloggen';
         });
 
+        page('/toonlessen', function () {
+            app.route = 'toonlessen';
+        });
+
         page('/uitloggen', function () {
             app.route = 'uitloggen';
         });
 
-        page('/toonvakken', function () {
-            app.route = 'toonvakken';
+
+          page('/toonlessen', function () {
+          app.route = 'toonlessen';
         });
 
         page('/users', function () {
             app.route = 'toonmedestudenten';
         });
 
+         page('/student-AbsentieOpgeven', function () {
+         app.route = 'toonstudent-AbsentieOpgeven';
+        });
 
+         page('/docent-toonabsenties', function () {
+         app.route = 'docent-toonabsenties';
+        });
+
+
+        page('/toonstudentrooster', function () {
+            app.route = 'toonstudentrooster';
+        });
         // 404
         page('*', function () {
             app.$.toast.text = 'Can\'t find: ' + window.location.href + '. Redirected you to Home Page';
@@ -81,3 +96,4 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     });
 </script>
+

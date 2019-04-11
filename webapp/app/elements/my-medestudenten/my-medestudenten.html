@@ -23,7 +23,7 @@
             </tr>
             <template is="dom-repeat" items="{{studenten}}">
                 <tr>
-                    <td><a href$="{{baseUrl}}users/{{item.naam}}">{{item.naam}}</td>
+                    <td><a href$="{{baseUrl}}users/{{item.naam}}">{{item.naam}}</a></td>
                 </tr>
             </template>
         </table>
@@ -59,7 +59,7 @@
                 },
 
                 fetchStudenten: function () {
-                    console.log("FetchVakken user=" + this.username);
+                    console.log("FetchStudenten user=" + this.username);
                     if (this.rol == "student") {
                         this.$.ajax.contentType = "application/json";
                         this.$.ajax.body = {

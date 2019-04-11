@@ -4,6 +4,7 @@ import model.PrIS;
 import server.JSONFileServer;
 
 import java.io.File;
+import java.io.IOException;
 
 public class Application {
     /**
@@ -27,17 +28,29 @@ public class Application {
     public static void main(String[] args) {
         JSONFileServer server = new JSONFileServer(new File("webapp/app"), 8888);
 
-        PrIS infoSysteem = new PrIS();
 
+        PrIS infoSysteem = new PrIS();
+        infoSysteem.readKlassen("klassen.csv");
+        infoSysteem.readRooster("rooster_C.csv");
         UserController userController = new UserController(infoSysteem);
         DocentController docentController = new DocentController(infoSysteem);
         StudentController studentController = new StudentController(infoSysteem);
 
         server.registerHandler("/login", userController);
-        server.registerHandler("/docent/mijnvakken", docentController);
+        server.registerHandler("/docent/mijnVakken", docentController);
+        server.registerHandler("/docent/mijnRooster", docentController);
         server.registerHandler("/student/mijnmedestudenten", studentController);
         server.registerHandler("/docent/mijnrooster", docentController);
-        server.registerHandler("/docent/absentieZetten", docentController);
+        server.registerHandler("/docent/absverwijderen", docentController);
+        server.registerHandler("/docent/studentabsenties", docentController);
+        server.registerHandler("/docent/toonKlasAbs", docentController);
+        server.registerHandler("/student/student-AbsentieOpgeven", studentController);
+        server.registerHandler("/student/mijnLessen", studentController);
+        server.registerHandler("/student/absentietonen", studentController);
+        try {
+            infoSysteem.readAbsenties();
+        }catch (IOException e){
+        }
         server.start();
     }
 }

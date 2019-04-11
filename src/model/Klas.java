@@ -1,33 +1,43 @@
 package model;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Objects;
 
-public class Klas {
-	private String klasCode;
+public class Klas implements Serializable {
+    private String klasCode;
+    private ArrayList<Student> studentenKlas;
 
-	public Klas(String klasCode) {
-		this.klasCode = klasCode;
-	}
+    public Klas(String klasCode) {
+        this.klasCode = klasCode;
+        studentenKlas = new ArrayList<>();
+    }
 
-	public String getKlasCode() {
-		return klasCode;
-	}
+    public void addStudentKlas(Student student) {
+        if (!studentenKlas.contains(student)) {
+            studentenKlas.add(student);
+        }
+    }
 
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (!(o instanceof Klas)) return false;
-		Klas klas = (Klas) o;
-		return Objects.equals(klasCode, klas.klasCode);
-	}
+    public ArrayList<Student> getStudentenKlas() {
+        return studentenKlas;
+    }
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(klasCode);
-	}
+    public String getKlasCode() {
+        return klasCode;
+    }
 
-	@Override
-	public String toString() {
-		return klasCode + "\n";
-	}
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Klas)) return false;
+        Klas klas = (Klas) o;
+        return Objects.equals(klasCode, klas.klasCode);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(klasCode);
+    }
+
 }

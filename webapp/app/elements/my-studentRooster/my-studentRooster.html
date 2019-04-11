@@ -1,0 +1,101 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-styles/typography.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+
+<dom-module id="my-studentRooster">
+    <template>
+        <style>
+            :host {
+                display: block;
+            }
+
+            span {
+                @apply(--paper-font-body1);
+            }
+
+        table, th, td {
+        border: 1px solid black;
+        }
+        th {
+        background-color: #3f51b5;
+        color: white;
+        }
+
+        tr:nth-child(even) {background-color: #f2f2f2}
+        </style>
+
+        <h1 class="page-title">Overzicht van mijn opgegeven absenties ( {{username}} )</h1>
+        <table>
+            <tr>
+                <th>Datum</th>
+                <th>Begintijd</th>
+                <th>Eindtijd</th>
+                <th>Klas</th>
+                <th>Docent</th>
+                <th>Lokaal</th>
+            </tr>
+            <template is="dom-repeat" items="{{absenties}}">
+                <tr>
+                    <td>{{item.datum}} </td>
+                    <td>{{item.begintijd}} </td>
+                    <td>{{item.eindtijd}} </td>
+                    <td>{{item.klas}} </td>
+                    <td>{{item.docent}}</td>
+                    <td>{{item.lokaal}}</td>
+
+                </tr>
+            </template>
+        </table>
+
+
+
+
+        <paper-button raised on-click="fetchRooster"> Refresh</paper-button>
+
+
+        <iron-ajax
+                id="ajax"
+                method="POST"
+                url="/student/absentietonen"
+                handle-as="json"
+                on-response="responseHandler">
+        </iron-ajax>
+
+    </template>
+
+    <script>
+        (function () {
+            'use strict';
+
+            Polymer({
+                is: 'my-studentRooster',
+
+                properties: {
+                    username: String,
+                    rol: {
+                        observer: 'fetchRooster'
+                    }
+                },
+
+                responseHandler: function (request) {
+                    console.log(request.detail.response);
+                    this.absenties = request.detail.response;
+                },
+
+                fetchRooster: function () {
+                    console.log("FetchRooster user=" + this.username);
+                    if (this.rol == "student") {
+                        this.$.ajax.contentType = "application/json";
+                        this.$.ajax.body = {
+                            "username": this.username
+                        };
+                        this.$.ajax.generateRequest();
+                    }
+                }
+
+            });
+        })();
+    </script>
+</dom-module>

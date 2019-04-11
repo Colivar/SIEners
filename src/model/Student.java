@@ -1,50 +1,65 @@
 package model;
 
-public class Student {
-	private String studentNummer;
-	private String voorNaam, tussenVoegsel, achterNaam, wachtwoord;
-	private Klas mijnKlas;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Objects;
 
-	public Student(String studentNummer, String voorNaam, String achterNaam, String tussenVoegsel) {
-		this.studentNummer = studentNummer;
-		this.voorNaam = voorNaam;
-		this.tussenVoegsel = tussenVoegsel;
-		this.achterNaam = achterNaam;
-		wachtwoord = "test";
-	}
+public class Student implements Serializable {
+    private String studentNummer;
+    private String voorNaam, tussenVoegsel, achterNaam, wachtwoord;
+    private ArrayList<Absentie> mijnabsenties;
 
-	public Student(String studentNummer, String voorNaam, String achterNaam) {
-		this.studentNummer = studentNummer;
-		this.voorNaam = voorNaam;
-		this.achterNaam = achterNaam;
-		wachtwoord = "";
-	}
+    public Student(String studentNummer, String voorNaam, String achterNaam, String tussenVoegsel) {
+        this.studentNummer = studentNummer;
+        this.voorNaam = voorNaam;
+        this.tussenVoegsel = tussenVoegsel;
+        this.achterNaam = achterNaam;
+        wachtwoord = "test";
+        mijnabsenties = new ArrayList<>();
+    }
 
-	public void setWachtwoord(String wachtwoord) {
-		this.wachtwoord = wachtwoord;
-	}
+    public Student(String studentNummer, String voorNaam, String achterNaam) {
+        this.studentNummer = studentNummer;
+        this.voorNaam = voorNaam;
+        this.achterNaam = achterNaam;
+        wachtwoord = "test";
+        mijnabsenties = new ArrayList<>();
+    }
 
-	public String getGebruikersNaam() {
-		return studentNummer;
-	}
+    public String getGebruikersNaam() {
+        return studentNummer;
+    }
 
-	public boolean controleerWachtwoord(String wachtwoord) {
-		return wachtwoord.equals(this.wachtwoord);
-	}
+    public void addabsentie(Absentie absentie) {
+        mijnabsenties.add(absentie);
+    }
 
-	public void setMijnKlas(Klas mijnKlas) {
-		this.mijnKlas = mijnKlas;
-	}
+    public void removeabsentie(Absentie absentie) {
+        mijnabsenties.remove(absentie);
+    }
 
-	public String getAchterNaam() {
-		return achterNaam;
-	}
+    public ArrayList<Absentie> getAbsentie() {
+        return mijnabsenties;
+    }
 
-	public String getVoorNaam() {
-		return voorNaam;
-	}
+    public boolean controleerWachtwoord(String wachtwoord) {
+        return wachtwoord.equals(this.wachtwoord);
+    }
 
-	public Klas getMijnKlas() {
-		return mijnKlas;
-	}
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Student)) return false;
+        Student student = (Student) o;
+        return Objects.equals(studentNummer, student.studentNummer);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(studentNummer);
+    }
+
+    public String getVoorNaam() {
+        return voorNaam;
+    }
 }
